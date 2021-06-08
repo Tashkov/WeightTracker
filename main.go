@@ -19,12 +19,14 @@ func NewUser(first_name string, last_name string, sex string, age int64, height 
 	sqlStatement := `
 	INSERT INTO users (first_name, last_name, sex, age, height) 
 	VALUES ($1, $2, $3, $4, $5)
+	RETURNING id
 	`
-	_, err = models.DB.Query(sqlStatement, first_name, last_name, sex, age, height)
+	id := 0
+	err = models.DB.QueryRow(sqlStatement, first_name, last_name, sex, age, height).Scan(&id)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Complete!")
+	fmt.Println("New record ID is:", id)
 }
 
 // Must have a function to ask for daily weight log
@@ -52,7 +54,10 @@ func main() {
 	http.HandleFunc("/users", usersIndex)
 	http.ListenAndServe(":3000", nil)
 
+	// Commiting to the DB doesn`t seem to work
+	// Find out why
 	NewUser("Testi", "Testov", "male", 30, 170)
+	models.AllUsers()
 
 }
 
