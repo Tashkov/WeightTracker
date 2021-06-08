@@ -11,7 +11,21 @@ import (
 )
 
 // Must have a DB to store the logs
-// May be a good idea to export the DB to a different file
+
+// The function will register a new user
+func NewUser(first_name string, last_name string, sex string, age int64, height int64) {
+	var err error
+
+	sqlStatement := `
+	INSERT INTO users (first_name, last_name, sex, age, height) 
+	VALUES ($1, $2, $3, $4, $5)
+	`
+	_, err = models.DB.Query(sqlStatement, first_name, last_name, sex, age, height)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Complete!")
+}
 
 // Must have a function to ask for daily weight log
 
@@ -37,6 +51,9 @@ func main() {
 
 	http.HandleFunc("/users", usersIndex)
 	http.ListenAndServe(":3000", nil)
+
+	NewUser("Testi", "Testov", "male", 30, 170)
+
 }
 
 func usersIndex(w http.ResponseWriter, r *http.Request) {
