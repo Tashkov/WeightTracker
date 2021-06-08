@@ -1,33 +1,19 @@
 package main
 
 import (
-	"Projects/WeightTracker/models"
-	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
-	_ "github.com/lib/pq"
+	"example.com/mod/models"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // Must have a DB to store the logs
 
 // The function will register a new user
-func NewUser(first_name string, last_name string, sex string, age int64, height int64) {
-	var err error
-
-	sqlStatement := `
-	INSERT INTO users (first_name, last_name, sex, age, height) 
-	VALUES ($1, $2, $3, $4, $5)
-	RETURNING id
-	`
-	id := 0
-	err = models.DB.QueryRow(sqlStatement, first_name, last_name, sex, age, height).Scan(&id)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("New record ID is:", id)
-}
 
 // Must have a function to ask for daily weight log
 
@@ -41,36 +27,47 @@ func NewUser(first_name string, last_name string, sex string, age int64, height 
 
 // Must have a function for warning if gaining weight instead of loosing
 
+const connStr string = "user=postgres dbname=weight_loss-db password=myPass host=localhost sslmode=disable"
+
 func main() {
-	var err error
 
-	connStr := "user=postgres dbname=weight_loss-db password=myPass host=localhost sslmode=disable"
-
-	models.DB, err = sql.Open("postgres", connStr)
+	db, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	http.HandleFunc("/users", usersIndex)
-	http.ListenAndServe(":3000", nil)
+	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Weight{})
 
-	// Commiting to the DB doesn`t seem to work
-	// Find out why
-	NewUser("Testi", "Testov", "male", 30, 170)
-	models.AllUsers()
+	db.Create(&models.User{
+		Name: "Hristo",
+		Age:  27,
+	})
+	db.Create(&models.User{
+		Name: "Ivancho",
+		Age:  20})
+
+	http.HandleFunc("/users", ListUsers)
+	http.ListenAndServe(":3000", nil)
 
 }
 
-func usersIndex(w http.ResponseWriter, r *http.Request) {
-	usrs, err := models.AllUsers()
+func ListUsers(w http.ResponseWriter, r *http.Request) {
+	db, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	usrs := []models.User{}
+	err = db.Find(&usrs).Error
 	if err != nil {
 		log.Println(err)
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
-
-	for _, usr := range usrs {
-		fmt.Fprintf(w, "%s, %s, %s, %d, %d", usr.FirstName, usr.LastName, usr.Sex, usr.Age, usr.HeightCm)
-	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(usrs)
+	fmt.Println(usrs)
 
 }
