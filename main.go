@@ -40,12 +40,16 @@ func main() {
 	db.AutoMigrate(&models.Weight{})
 
 	db.Create(&models.User{
-		Name: "Hristo",
-		Age:  27,
-	})
+		First_name: "Georgi",
+		Last_name:  "Test",
+		Age:        69,
+		Height_cm:  169})
+
 	db.Create(&models.User{
-		Name: "Ivancho",
-		Age:  20})
+		First_name: "Hristo",
+		Last_name:  "Test",
+		Age:        69,
+		Height_cm:  169})
 
 	http.HandleFunc("/users", ListUsers)
 	http.ListenAndServe(":3000", nil)
