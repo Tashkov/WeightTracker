@@ -27,7 +27,7 @@ import (
 
 // Must have a function for warning if gaining weight instead of loosing
 
-const connStr string = "user=postgres dbname=weight_loss-db password=myPass host=localhost sslmode=disable"
+const connStr string = "host=localhost user=postgres password=Weight!123 dbname=weight_loss-db port=5432 sslmode=disable"
 
 func main() {
 
