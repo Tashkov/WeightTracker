@@ -1,12 +1,19 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"example.com/mod/models"
 	"github.com/gin-gonic/gin"
 )
+
+// ListAllUsers - Get all users
+func ListAllUsers(c *gin.Context) {
+	var users []models.User
+	models.DB.Find(&users)
+
+	c.JSON(http.StatusOK, gin.H{"data": users})
+}
 
 // Schema to validate the user input
 type CreateUserInput struct {
@@ -53,11 +60,6 @@ func FindUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
-// DeleteUser - Delete a specific user from the DB
-func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Delete User Endpoint Hit")
-}
-
 // Schema to validate the user input
 // There was an index out of reach error while trying to PATCH
 // Was resolved after adding ID uint to the validation schema
@@ -92,10 +94,16 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
-// ListAllUsers - Get all users
-func ListAllUsers(c *gin.Context) {
-	var users []models.User
-	models.DB.Find(&users)
+// DELETE /users/:id
+// DeleteUser = Deletes a specific user
+func DeleteUser(c *gin.Context) {
+	var user models.User
+	if err := models.DB.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{"data": users})
+	models.DB.Delete(&user)
+
+	c.JSON(http.StatusOK, gin.H{"data": true})
 }

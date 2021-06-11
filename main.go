@@ -21,6 +21,7 @@ func main() {
 	r.POST("/users", handlers.CreateUser)
 	r.GET("/users/:id", handlers.FindUser)
 	r.PATCH("/users/:id", handlers.UpdateUser)
+	r.DELETE("users/:id", handlers.DeleteUser)
 
 	r.Run()
 
