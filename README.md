@@ -16,6 +16,7 @@ Use Cases:
       3. Display specific information about the user.
   3. Update user information;
   4. Delete user information.
+  5. Display All Users // Completed 
 
 /weight_logs
   1. Create weight log;
