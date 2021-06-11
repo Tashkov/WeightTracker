@@ -18,7 +18,9 @@ func main() {
 	models.ConnectDataBase() // new
 
 	r.GET("/users", handlers.ListAllUsers)
-	r.POST("/new_users", handlers.CreateUser)
+	r.POST("/users", handlers.CreateUser)
+	r.GET("/users/:id", handlers.FindUser)
+	r.PATCH("/users/:id", handlers.UpdateUser)
 
 	r.Run()
 
