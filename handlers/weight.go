@@ -34,8 +34,7 @@ func CreateWeight(c *gin.Context) {
 
 	//Create Weight
 	weight := models.Weight_log{
-		Weight_log: input.Weight_log,
-		User_id:    input.User_id}
+		Weight_log: input.Weight_log}
 	models.DB.Create(&weight)
 
 	c.JSON(http.StatusOK, gin.H{"data": weight})

@@ -1,10 +1,9 @@
 package models
 
-import "time"
+import "gorm.io/gorm"
 
 type Weight_log struct {
-	ID         uint      `json:"id" gorm:"primary_key"`
-	Weight_log int64     `json:"Weight_log"`
-	User_id    uint      `json:"User_id"`
-	LogsDate   time.Time `form:"LogsDate"`
+	gorm.Model
+	Weight_log int64 `json:"Weight_log"`
+	User_id    uint  `json:"User_id"`
 }
