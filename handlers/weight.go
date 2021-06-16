@@ -34,7 +34,8 @@ func CreateWeight(c *gin.Context) {
 
 	//Create Weight
 	weight := models.Weight_log{
-		Weight_log: input.Weight_log}
+		Weight_log: input.Weight_log,
+		User_id:    input.User_id}
 	models.DB.Create(&weight)
 
 	c.JSON(http.StatusOK, gin.H{"data": weight})
@@ -48,7 +49,6 @@ func FetchUserWeights(c *gin.Context) {
 	if err := models.DB.Where("User_id=?", c.Param("id")).Find(&userWeightLogs).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
 		return
-
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": userWeightLogs})
