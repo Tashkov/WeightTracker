@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-const connStr string = "host=localhost user=postgres password=//EnterPasswordHere// dbname=weight_loss-db port=5432 sslmode=disable"
+const connStr string = "host=localhost user=postgres password=//EnterPassword// dbname=weight_loss-db port=5432 sslmode=disable"
 
 var DB *gorm.DB
 
@@ -18,6 +18,6 @@ func ConnectDataBase() {
 
 	database.AutoMigrate(&User{})
 	database.AutoMigrate(&Weight_log{})
-	
+
 	DB = database
 }
