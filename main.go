@@ -26,8 +26,9 @@ func main() {
 
 	//Weight
 	r.POST("/weight", handlers.CreateWeight)
+	r.GET("/weights", handlers.ListAllWeight)
+	r.GET("/weights/:id", handlers.FetchUserWeights)
 
-	
 	r.Run()
 
 }
