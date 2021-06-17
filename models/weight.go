@@ -2,8 +2,8 @@ package models
 
 import "gorm.io/gorm"
 
-type Weight_log struct {
+type WeightLog struct {
 	gorm.Model
-	Weight_log int64 `json:"Weight_log"`
-	User_id    uint  `json:"User_id"`
+	WeightLog int64 `json:"WeightLog"`
+	UserID    uint  `json:"UserID"`
 }

@@ -9,7 +9,7 @@ import (
 
 // ListAllWeight - Get all weight records
 func ListAllWeight(c *gin.Context) {
-	var weights []models.Weight_log
+	var weights []models.WeightLog
 	models.DB.Find(&weights)
 
 	c.JSON(http.StatusOK, gin.H{"data": weights})
@@ -18,8 +18,8 @@ func ListAllWeight(c *gin.Context) {
 
 // Schema to validate the user input
 type CreateWeightInput struct {
-	Weight_log int64 `json:"Weight_log" binding:"required"`
-	User_id    uint  `json:"User_id" binding:"required"`
+	WeightLog int64 `json:"WeightLog" binding:"required"`
+	UserID    uint  `json:"UserID" binding:"required"`
 }
 
 //POST /weight
@@ -33,9 +33,9 @@ func CreateWeight(c *gin.Context) {
 	}
 
 	//Create Weight
-	weight := models.Weight_log{
-		Weight_log: input.Weight_log,
-		User_id:    input.User_id}
+	weight := models.WeightLog{
+		WeightLog: input.WeightLog,
+		UserID:    input.UserID}
 	models.DB.Create(&weight)
 
 	c.JSON(http.StatusOK, gin.H{"data": weight})
@@ -44,9 +44,9 @@ func CreateWeight(c *gin.Context) {
 // GET /weights/:id
 // FetchUserWeights - Lists all weight logs of the user
 func FetchUserWeights(c *gin.Context) {
-	var userWeightLogs []models.Weight_log
+	var userWeightLogs []models.WeightLog
 
-	if err := models.DB.Where("User_id=?", c.Param("id")).Find(&userWeightLogs).Error; err != nil {
+	if err := models.DB.Where("user_id=?", c.Param("id")).Find(&userWeightLogs).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
 		return
 	}

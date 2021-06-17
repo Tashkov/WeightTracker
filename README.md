@@ -18,7 +18,7 @@ Use Cases:
   4. Delete user information.
   5. Display All Users // Completed 
 
-/weight_logs
+/WeightLogs
   1. Create weight log;
     -link to single user
     -date of log
