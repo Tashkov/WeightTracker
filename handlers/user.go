@@ -51,7 +51,7 @@ func CreateUser(c *gin.Context) {
 func FindUser(c *gin.Context) {
 	var user models.User
 
-	if err := models.DB.Preload("Weight_log").Where("id=?", c.Param("id")).First(&user).Error; err != nil {
+	if err := models.DB.Where("id=?", c.Param("id")).First(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
 		return
 	}
