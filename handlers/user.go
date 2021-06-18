@@ -17,11 +17,11 @@ func ListAllUsers(c *gin.Context) {
 
 // Schema to validate the user input
 type CreateUserInput struct {
-	First_name string `json:"First_name" binding:"required"`
-	Last_name  string `json:"Last_name" binding:"required"`
-	Sex        string `json:"Sex" binding:"required"`
-	Age        int64  `json:"Age" binding:"required"`
-	Height_cm  int64  `json:"Height_cm" binding:"required"`
+	FirstName string `json:"FirstName" binding:"required"`
+	LastName  string `json:"LastName" binding:"required"`
+	Sex       string `json:"Sex" binding:"required"`
+	Age       int64  `json:"Age" binding:"required"`
+	Height    int64  `json:"Height" binding:"required"`
 }
 
 // POST /users
