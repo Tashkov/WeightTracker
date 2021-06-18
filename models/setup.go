@@ -17,7 +17,9 @@ func ConnectDataBase() {
 	}
 
 	database.AutoMigrate(&User{})
-	database.AutoMigrate(&Weight_log{})
+	database.AutoMigrate(&WeightLog{})
+	database.Debug().Migrator().CreateConstraint(&User{}, "WeightLogs")
+	database.Debug().Migrator().CreateConstraint(&User{}, "fk_users_weight_log")
 
 	DB = database
 }

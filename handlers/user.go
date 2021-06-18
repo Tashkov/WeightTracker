@@ -28,22 +28,15 @@ type CreateUserInput struct {
 // CreateUser - Using the user model create a new user in the DB
 func CreateUser(c *gin.Context) {
 	// Validate input
-	var input CreateUserInput
+	var input models.User
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// Create User
-	user := models.User{
-		First_name: input.First_name,
-		Last_name:  input.Last_name,
-		Sex:        input.Sex,
-		Age:        input.Age,
-		Height_cm:  input.Height_cm}
-	models.DB.Create(&user)
+	models.DB.Create(&input)
 
-	c.JSON(http.StatusOK, gin.H{"data": user})
+	c.JSON(http.StatusOK, gin.H{"data": input})
 }
 
 // GET /users/:id
@@ -51,7 +44,7 @@ func CreateUser(c *gin.Context) {
 func FindUser(c *gin.Context) {
 	var user models.User
 
-	if err := models.DB.Where("id=?", c.Param("id")).First(&user).Error; err != nil {
+	if err := models.DB.Debug().Preload("WeightLogs").Where("id=?", c.Param("id")).First(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
 		return
 	}

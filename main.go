@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"example.com/mod/handlers"
@@ -15,8 +16,9 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"data": "home page"})
 	})
 
+	
 	models.ConnectDataBase() // new
-
+	fmt.Println("connect to db")
 	//User
 	r.GET("/users", handlers.ListAllUsers)
 	r.POST("/users", handlers.CreateUser)
