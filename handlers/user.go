@@ -56,12 +56,12 @@ func FindUser(c *gin.Context) {
 // There was an index out of reach error while trying to PATCH
 // Was resolved after adding ID uint to the validation schema
 type UpdateUserInput struct {
-	ID         uint   `json:"-"`
-	First_name string `json:"First_name"`
-	Last_name  string `json:"Last_name"`
-	Sex        string `json:"Sex"`
-	Age        int64  `json:"Age"`
-	Height_cm  int64  `json:"Height_cm"`
+	ID        uint   `json:"-"`
+	FirstName string `json:"FirstName"`
+	LastName  string `json:"LastName"`
+	Sex       string `json:"Sex"`
+	Age       int64  `json:"Age"`
+	Height    int64  `json:"Height"`
 }
 
 // PATCH /users/:id

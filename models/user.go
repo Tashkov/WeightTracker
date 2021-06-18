@@ -4,10 +4,10 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	First_name string      `json:"First_name"`
-	Last_name  string      `json:"Last_name"`
+	FirstName  string      `json:"FirstName"`
+	LastName   string      `json:"LastName"`
 	Sex        string      `json:"Sex"`
 	Age        int64       `json:"Age"`
-	Height_cm  int64       `json:"Height_cm"`
+	Height     int64       `json:"Height"`
 	WeightLogs []WeightLog `gorm:"foreignKey:UserID"`
 }

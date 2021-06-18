@@ -46,7 +46,7 @@ func CreateWeight(c *gin.Context) {
 func FetchUserWeights(c *gin.Context) {
 	var userWeightLogs []models.WeightLog
 
-	if err := models.DB.Where("user_id=?", c.Param("id")).Find(&userWeightLogs).Error; err != nil {
+	if err := models.DB.Where("UserID=?", c.Param("id")).Find(&userWeightLogs).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
 		return
 	}
