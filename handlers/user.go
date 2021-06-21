@@ -17,11 +17,11 @@ func ListAllUsers(c *gin.Context) {
 
 // Schema to validate the user input
 type CreateUserInput struct {
-	FirstName string `json:"FirstName" binding:"required"`
-	LastName  string `json:"LastName" binding:"required"`
-	Sex       string `json:"Sex" binding:"required"`
-	Age       int64  `json:"Age" binding:"required"`
-	Height    int64  `json:"Height" binding:"required"`
+	FirstName string `json:"first_name" binding:"required"`
+	LastName  string `json:"last_name" binding:"required"`
+	Sex       string `json:"sex" binding:"required"`
+	Age       int64  `json:"age" binding:"required"`
+	Height    int64  `json:"height" binding:"required"`
 }
 
 // POST /users
@@ -57,11 +57,11 @@ func FindUser(c *gin.Context) {
 // Was resolved after adding ID uint to the validation schema
 type UpdateUserInput struct {
 	ID        uint   `json:"-"`
-	FirstName string `json:"FirstName"`
-	LastName  string `json:"LastName"`
-	Sex       string `json:"Sex"`
-	Age       int64  `json:"Age"`
-	Height    int64  `json:"Height"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Sex       string `json:"sex"`
+	Age       int64  `json:"age"`
+	Height    int64  `json:"height"`
 }
 
 // PATCH /users/:id

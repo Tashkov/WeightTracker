@@ -4,6 +4,6 @@ import "gorm.io/gorm"
 
 type WeightLog struct {
 	gorm.Model
-	WeightLog int64 `json:"WeightLog"`
-	UserID    uint  `json:"UserID"`
+	WeightLog int64 `json:"weight_log"`
+	UserID    uint  `json:"user_id"`
 }
