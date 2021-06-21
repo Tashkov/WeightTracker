@@ -17,11 +17,13 @@ func ListAllUsers(c *gin.Context) {
 
 // Schema to validate the user input
 type CreateUserInput struct {
-	FirstName string `json:"first_name" binding:"required"`
-	LastName  string `json:"last_name" binding:"required"`
-	Sex       string `json:"sex" binding:"required"`
-	Age       int64  `json:"age" binding:"required"`
-	Height    int64  `json:"height" binding:"required"`
+	FirstName     string `json:"first_name" binding:"required"`
+	LastName      string `json:"last_name" binding:"required"`
+	Sex           string `json:"sex" binding:"required"`
+	Age           int64  `json:"age" binding:"required"`
+	Height        int64  `json:"height" binding:"required"`
+	CurrentWeight int64  `json:"current_weight" binding:"required"`
+	WeightGoal    int64  `json:"weight_goal" binding:"required"`
 }
 
 // POST /users
@@ -56,12 +58,13 @@ func FindUser(c *gin.Context) {
 // There was an index out of reach error while trying to PATCH
 // Was resolved after adding ID uint to the validation schema
 type UpdateUserInput struct {
-	ID        uint   `json:"-"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Sex       string `json:"sex"`
-	Age       int64  `json:"age"`
-	Height    int64  `json:"height"`
+	FirstName     string `json:"first_name"`
+	LastName      string `json:"last_name"`
+	Sex           string `json:"sex"`
+	Age           int64  `json:"age"`
+	Height        int64  `json:"height"`
+	CurrentWeight int64  `json:"current_weight"`
+	WeightGoal    int64  `json:"weight_goal"`
 }
 
 // PATCH /users/:id

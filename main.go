@@ -13,10 +13,9 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"data": "home page"})
+		c.JSON(http.StatusOK, gin.H{"data": "Welcome to Weight Tracker 1.0"})
 	})
 
-	
 	models.ConnectDataBase() // new
 	fmt.Println("connect to db")
 	//User

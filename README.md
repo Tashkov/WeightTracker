@@ -7,7 +7,8 @@ Use Cases:
     -age
     -height
     -sex
-    -weight_current
+    -starting weight
+    -weight_current -> Make so that when a new weightLog is made this is updated
     -weight_goal
     -desired_weight_loss (weakly/monthly?)
   2. Read user info:
